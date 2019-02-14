@@ -1,0 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cubo;
+
+/**
+ *
+ * @author omar
+ */
+public class Cuadrado {
+    protected float l;
+    
+    protected float calcularArea(float l){
+        float area = l * l;
+        return area;
+    }
+    
+    protected float calcularPerimetro(float l){
+        float peri = l * 4;
+        return peri;
+    }
+}
