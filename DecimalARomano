@@ -1,0 +1,71 @@
+package decimalaromano;
+
+import java.util.Scanner;
+
+public class DecimalARomano {
+    static String[] unidad = {"","I","II","III","IV","V","VI","VII","VIII","IX"};
+    static String[] decena = {"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC"};
+    static String[] centena = {"","C","CC","CCC","CD","D","DC","DCC","DCCC","CM"};
+        
+    public static void bienvenida(){
+        System.out.println("Bienvenido al convertir de Decima a Romano.");
+    }
+    
+    public static void main(String[] args) {
+        //Variables de entorno
+        Scanner comando = new Scanner(System.in);
+        int num = 0, unidades, decenas, centenas, millares;
+        boolean ok = false;
+        
+        //Mensaje de bienvenida
+        bienvenida();
+        
+        //ININCIA: Captura del número ingresado
+        while(!ok){
+            System.out.println("Ingrese un número a convertir [1-1000]:");
+            num = comando.nextInt();
+
+            if(num < 1){
+                System.out.println("Por favor escriba un número mayor o igual a 1");
+            }else if(num > 1000){
+                System.out.println("Por favor escriba un número menor o igual a 1000");
+            }else{
+                ok = true;
+            }
+        }
+
+        //Resetea la bandera
+        ok = false;
+        //TERMINA: Captura del número ingresado
+
+        //INICIA: Abstraer número
+        millares = num / 1000;
+        if (millares > 0){
+            num = num - (1000 * millares);
+        }
+
+        centenas = num / 100;
+        if (centenas > 0){
+            num = num - (100 * centenas);
+        }
+
+        decenas = num / 10;
+        if (decenas > 0){
+            num = num - (10 * decenas);
+        }
+
+        unidades = num;
+        //TERMINA: Abstraer número
+
+        //INICIA: Representación del número
+        System.out.print("Resultado: ");
+        if(millares == 1){
+            System.out.print("M");
+        }
+
+        System.out.print(centena[centenas]);
+        System.out.print(decena[decenas]);
+        System.out.println(unidad[unidades]);
+        //TERMINA: Representación del número 
+    }
+}
