@@ -1,0 +1,75 @@
+package cubo;
+
+import java.util.Scanner;
+
+public class Cubo extends Cuadrado{
+    public static float calcularVolumen(float l){
+        float vol = l * l * l;
+        return vol;
+    }
+    
+    public static float calcularPerimetroCubo(float l){
+        float vol = l * 12;
+        return vol;
+    }
+    
+    public static void funciones(){
+        System.out.println("Por favol especifique lo que desea realizar: ");
+        System.out.println("Área de cuadrado[a] ");
+        System.out.println("Perímetro de cuadrado[p] ");
+        System.out.println("Volumen del cubo[v] ");
+        System.out.println("Perímetro del cubo[o]");
+        System.out.println("Cancelar[c]");
+        System.out.println("Salir[s]");
+    }
+    
+    public static void main(String[] args) {
+        Scanner comando = new Scanner(System.in);
+        Cuadrado cubo = new Cuadrado();
+        boolean repetir = true;
+        float lado;
+        String com;
+        
+        while(repetir){
+            System.out.println("Para calcular los datos, por favor ingrese las medidas de los lados: ");
+            lado = comando.nextFloat();
+            
+            funciones();
+            
+            com = comando.next();
+            com = com.toLowerCase();
+            
+            
+            
+            switch(com){
+                case "a":
+                    System.out.print("Área del cuadrado: ");
+                    System.out.println(cubo.calcularArea(lado));
+                    break;
+                case "p":
+                    System.out.print("Perímetro del cuadrado: ");
+                    System.out.println(cubo.calcularPerimetro(lado));
+                    break;
+                case "v":
+                    System.out.print("Volumen del cubo: ");
+                    System.out.println(calcularVolumen(lado));
+                    break;
+                case "o":
+                    System.out.print("Perímetro del cubo: ");
+                    System.out.println(calcularPerimetroCubo(lado));
+                    break;
+                case "c":
+                    break;
+                case "s":
+                    repetir = false;
+                    break;
+                
+                default:
+                System.out.println("Por favor reintente...");
+                funciones();
+            }
+        }
+        
+        System.out.println("¡Gracias y hasta pronto!");
+    }
+}
