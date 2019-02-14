@@ -1,0 +1,168 @@
+package ejr.pkg2019.clavemorse;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author omar
+ */
+public class EJR2019ClaveMorse {
+    //Creación de arreglos correspondientes para la conversión
+    static String[] letras = {"a","b","c","d","e","f","g","h","i","j","k","l",
+                              "m","n","o","p","q","r","s","t","u","v","w","x",
+                              "y","z"," ","0","1","2","3","4","5","6","7","8","9"};
+    static String[] morse = {".-","-...","-.-.","-..",".","..-.","--.","....","..",
+                      ".---","-.-",".-..","--","-.","---",".--.","--.-",
+                      ".-.","...","-","..-","...-",".--","-..-","-.--",
+                      "--..","  ","-----",".----","..---","...--","....-",
+                      ".....","-....","--...","---..","----."};
+    static int letrasLong = letras.length, morseLong = morse.length;
+        
+    public static void bienvenida(){
+        System.out.println("Bienvenido al sistema de traducción de texto a "
+                + "código morse, por favor indique si desea convertir desde "
+                + "texto[t] o clave morse[m]");
+    }
+    
+    public static void main(String[] args) {
+        Scanner comando = new Scanner(System.in);
+        //Variables de entorno
+        String texto, letra, funcion;
+        int longCadena;
+        boolean ok = false, morseOK = true;     //Bandera de bucle
+        
+        bienvenida();
+        funcion = comando.nextLine();
+        
+        funcion = funcion.toLowerCase();
+        while(!ok){
+            switch(funcion){
+                case "t":
+                    ok = true;  //Bandera
+                    //INICIA: Ingresar texto
+                    System.out.println("Ingrese el texto para convertir a Morse");
+                    texto = comando.nextLine();
+                    longCadena = texto.length();
+                    //TERMINA: Ingresar texto
+                    
+                    //INICIA: Convertir texto a Morse
+                    for(int i = 1; i <= longCadena; i++){
+                        //INICIA: Análisis de texto por caracteres
+                        letra = texto.substring(i-1, i);
+                        letra = letra.toLowerCase();
+                        //TERMINA: Análisis de texto por caracteres
+                        
+                        //INICIA: Comparación y resutlados
+                        for(int r = 0; r < letrasLong; r++){
+                            if(letra.equals(letras[r])){
+                                System.out.print(morse[r]);
+                                
+                                if(!letra.equals(" ")){
+                                    System.out.print(" ");
+                                }
+                            }
+                        }
+                        //TERMINA: Comparación y resutlados
+                    }
+                    //TERMINA: Convertir texto a Morse
+                    break;
+                case "m":
+                    ok = true;
+                    int espacios = 0, espaciosPalabras = 1, espacioCons = 0, contChar;
+                    System.out.println("Ingrese el código morse para convertir a texto, ingrese un espacio después de cada letra y 3 espacios para cada palabra.");
+                    texto = comando.nextLine();
+                    longCadena = texto.length();
+                    
+                    //INICIA: Comprobación de código morse
+                    for(int i = 1; i <= longCadena; i++){
+                        letra = texto.substring(i-1, i);
+                        
+                        //Verificación de caracteres inresados
+                        if(letra.equals(".") || letra.equals("-") || letra.equals(" ")){
+                            //Contar espacios consecutivos
+                            if(letra.equals(" ")){
+                                espacioCons++;
+                            }else{
+                                espacioCons = 0;
+                            }
+                        }else{
+                            morseOK = false;
+                        }
+                        
+                        //Contar espacios
+                        if(letra.equals(" ")){
+                            espacios++;
+                        }
+                        
+                        //Contar palabras
+                        if(espacioCons == 3){
+                            espaciosPalabras++;
+                        }
+                    }
+                    //TERMINA: Comprobación de código morse
+                    
+                    if(morseOK){
+                        //INICIA: Conversión a texto
+                        System.out.println("Código correcto, procesando...");
+                        /*
+                        System.out.print("Letras: ");
+                        System.out.println(espacios);
+                        System.out.print("Palabras: ");
+                        System.out.println(espaciosPalabras);
+                        */
+                        
+                        //Recorrer todo el texto ingresado
+                        espacioCons = 0;
+                        for(int r = 1; r <= espacios; r++){
+                            //INICIA: Contar posiciones hasta encontrar espacios
+                            contChar = 0;
+                            letra = "";
+                            
+                            //Identificar el trile espacio para ponere espacio entre palabras
+                            while((!letra.equals(" "))){
+                                contChar++;
+                                letra = texto.substring(contChar-1, contChar);
+                                //Contar espacios consecutivos
+                                if(letra.equals(" ")){
+                                    espacioCons++;
+                                }else{
+                                    espacioCons = 0;
+                                }
+
+                                if(espacioCons >= 3){
+                                    System.out.print(" ");
+                                    espacioCons = 0;
+                                }
+                            }
+                            //TERMINA: Contar posiciones hasta encontrar espacios
+                            
+                            //INICIA: Buscar coincidencias
+                            String letraMorse = texto.substring(0, contChar-1);
+                            for(int d = 0; d < morseLong; d++){ 
+                                if(letraMorse.equals(morse[d])){
+                                    System.out.print(letras[d]);
+                                }
+                            }
+                            //TERMINA: Buscar coincidencias
+                            
+                            //INICIA: Descartar texto convertido
+                            texto = texto.substring(contChar, texto.length());
+                            //TERMINA: Descartar texto convertido
+                        }
+                        //TERMINA: Conversión a texto
+                        
+                    }else{
+                        //INICIA: Error, reintente
+                        System.out.println("Error de al introducir el código, por favor reintente:");
+                        ok = false;
+                        //TERMINA: Error, reintente
+                    }
+                    
+                    break;
+                default:
+                    System.out.println("Reintente...");
+                    ok = false;
+            }
+        }
+    }
+}
